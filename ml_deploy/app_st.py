@@ -3,27 +3,40 @@ import numpy as np
 import pickle
 import os
 
+base_path = os.path.dirname(__file__)
+
 # 모델 로드 함수
 @st.cache_resource # 자원 캐싱 기능
 def load_model():
-    base_path = os.path.dirname(__file__)
-    model_path = os.path.join(base_path, "models", "iris_model_lfr.pkl")
+    model_path = os.path.join(base_path, "models", "iris_model_rfc.pkl")
     
     # with open('models/iris_model_rfc.pkl', 'rb') as f:
     
     with open(model_path, 'rb') as f:
         model = pickle.load(f)
     return model
+
 model = load_model()
 
 # 클래스별 이미지 경로 설정
+## 윈도우에서 작동
+# def get_image_path(prediction):
+#     if prediction == 0:
+#         return "static/setosa.jpg"  # setosa 이미지 경로
+#     elif prediction == 1:
+#         return "static/versicolor.jpg"  # versicolor 이미지 경로
+#     else:
+#         return "static/virginica.png"  # virginica 이미지 경로
+
+# Mac/Linux에서 작동
+
 def get_image_path(prediction):
     if prediction == 0:
-        return "static/setosa.jpg"  # setosa 이미지 경로
+        return os.path.join(base_path,"static", "setosa.jpg")  # setosa 이미지 경로
     elif prediction == 1:
-        return "static/versicolor.jpg"  # versicolor 이미지 경로
+        return os.path.join(base_path,"static", "versicolor.jpg")  # versicolor 이미지 경로
     else:
-        return "static/virginica.png"  # virginica 이미지 경로
+        return os.path.join(base_path,"static", "virginica.png")  # virginica 이미지 경로
     
 # 메인 실행 코드
     
